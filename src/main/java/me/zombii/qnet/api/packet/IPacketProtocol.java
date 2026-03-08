@@ -19,6 +19,8 @@ public interface IPacketProtocol {
      *     <li>CustomPacket and PacketHandler Reregistration: <strong>Disabled</strong></li>
      *     <li>Compression Level: {@link java.util.zip.Deflater#DEFAULT_COMPRESSION}</li>
      * </ul>
+     *
+     * @return the default packet protocol.
     */
     static IPacketProtocol makeDefault() {
         return new DefaultPacketProtocol();
@@ -30,6 +32,10 @@ public interface IPacketProtocol {
      *     <li>Compression: <strong>Enabled</strong></li>
      *     <li>Compression Level: {@link java.util.zip.Deflater#DEFAULT_COMPRESSION}</li>
      * </ul>
+     *
+     * @param allowReregistration if enabled, allows people to overwrite your packets and packet handlers.
+     *
+     * @return the default packet protocol.
      */
     static IPacketProtocol makeDefault(boolean allowReregistration) {
         return new DefaultPacketProtocol(allowReregistration);
@@ -37,17 +43,24 @@ public interface IPacketProtocol {
 
 
     /**
-     * Makes a prebuilt instance of this class with a custom instance of {@link IPacketFormat} and default settings.<br/>
+     * Makes a prebuilt instance of this class with a custom instance of {@link IPacketFormat} and default settings.<br>
      * <ul>
      *     <li>CustomPacket and PacketHandler Reregistration: <strong>Disabled</strong></li>
      * </ul>
+     *
+     * @param packetFormat the format for the headers and footers of packets to be used.
+     * @return the default packet protocol.
      */
     static IPacketProtocol makeDefault(IPacketFormat packetFormat) {
         return new DefaultPacketProtocol(packetFormat);
     }
 
     /**
-     * Makes a prebuilt instance of this class with a custom instance of {@link IPacketFormat}.<br/>
+     * Makes a prebuilt instance of this class with a custom instance of {@link IPacketFormat}.<br>
+     *
+     * @param packetFormat the format for the headers and footers of packets to be used.
+     * @param allowReregistration if enabled, allows people to overwrite your packets and packet handlers.
+     * @return the default packet protocol.
      */
     static IPacketProtocol makeDefault(IPacketFormat packetFormat, boolean allowReregistration) {
         return new DefaultPacketProtocol(packetFormat, allowReregistration);
@@ -80,6 +93,7 @@ public interface IPacketProtocol {
     /**
      * Registers a packet handler to a given network side and packet.
      *
+     * @param <T> The packet's type.
      * @param side The network side to register the handler for.
      * @param packetClass The packet to register the handler for.
      * @param handler The packet handler
@@ -90,11 +104,13 @@ public interface IPacketProtocol {
      * Gets a registered packet handler from a given side and packet-id.
      * @param id the packet-id the handler belongs to.
      * @param side the network side the handler was registered for.
+     * @return The packet handler for the side and packet-id.
      */
     IPacketHandler<?> getHandler(Side side, int id);
 
     /**
      * Gets a registered packet handler from a given side and packet-id.
+     * @param <T> The packet's type.
      * @param packetClass packet the handler belongs to.
      * @param side the network side the handler was registered for.
      * @return The packet handler for the side and packet.
@@ -103,6 +119,7 @@ public interface IPacketProtocol {
 
     /**
      * Gets a registered packet handler from a given side and packet-id.
+     * @param <T> The packet's type.
      * @param packet packet the handler belongs to.
      * @param side the network side the handler was registered for.
      * @return The packet handler for the side and packet.

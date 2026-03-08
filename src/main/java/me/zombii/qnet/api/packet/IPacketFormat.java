@@ -21,6 +21,8 @@ public interface IPacketFormat {
      *     <li>Compression: <strong>Enabled</strong></li>
      *     <li>Compression Level: {@link java.util.zip.Deflater#DEFAULT_COMPRESSION}</li>
      * </ul>
+     *
+     * @return the default packet format.
      */
     static IPacketFormat makeDefault() {
         return new DefaultPacketFormat();
@@ -31,6 +33,10 @@ public interface IPacketFormat {
      * <ul>
      *     <li>Compression Level (if enabled): {@link java.util.zip.Deflater#DEFAULT_COMPRESSION}</li>
      * </ul>
+     *
+     * @param compressionEnabled sets if compression is to be used.
+     *
+     * @return the default packet format.
      */
     static IPacketFormat makeDefault(boolean compressionEnabled) {
         return new DefaultPacketFormat(compressionEnabled);
@@ -42,6 +48,10 @@ public interface IPacketFormat {
      *     <li>Compression: <strong>Enabled</strong></li>
      *     <li>Compression Level: {@link java.util.zip.Deflater#DEFAULT_COMPRESSION}</li>
      * </ul>
+     *
+     * @param compressionLevel sets the compression level to compress bytes at.
+     *
+     * @return the default packet format.
      */
     static IPacketFormat makeDefault(int compressionLevel) {
         return new DefaultPacketFormat(true, compressionLevel);

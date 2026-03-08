@@ -18,6 +18,7 @@ public class Deserializer {
 
     /**
      * Creates a serializer with an input stream with the endian set as "big endian"
+     * @param in the input stream used.
      */
     public Deserializer(InputStream in) {
         this(in, ByteOrder.BIG_ENDIAN);
@@ -25,6 +26,8 @@ public class Deserializer {
 
     /**
      * Creates a deserializer with an output stream and endian.
+     * @param inputStream the input stream used.
+     * @param byteOrder the endian to be set.
      */
     public Deserializer(
             InputStream inputStream,
@@ -202,6 +205,8 @@ public class Deserializer {
 
     /**
      * Closes the owner input stream.
+     *
+     * @throws IOException if the stream was already closed or fails to close.
      */
     public void close() throws IOException {
         in.close();

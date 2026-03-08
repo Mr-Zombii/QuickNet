@@ -29,6 +29,8 @@ public interface ITCPServer {
 
     /**
      * Creates a default TCPServer using the Netty Backend with on connection accepted and closed hooks.
+     * @param onConnectionAccepted sets a hook for when the connection succeeds.
+     * @param onConnectionClosed sets a hook for when the connection is closed.
      * @return Netty TCP Server.
      */
     static ITCPServer newNettyServer(Consumer<IConnection> onConnectionAccepted, Consumer<IConnection> onConnectionClosed) {
@@ -38,6 +40,8 @@ public interface ITCPServer {
     /**
      * Creates a default TCPServer using the Java.Net Backend.
      * @return Java.Net TCP Server.
+     *
+     * @throws IOException if the socket fails to create.
      */
     static ITCPServer newJavaNetServer() throws IOException {
         return new JavaNetTCPServer();
@@ -45,7 +49,11 @@ public interface ITCPServer {
 
     /**
      * Creates a default TCPServer using the Java.Net Backend with on connection accepted and closed hooks.
+     * @param onConnectionAccepted sets a hook for when the connection succeeds.
+     * @param onConnectionClosed sets a hook for when the connection is closed.
      * @return Java.Net TCP Server.
+     *
+     * @throws IOException if the socket fails to create.
      */
     static ITCPServer newJavaNetServer(Consumer<IConnection> onConnectionAccepted, Consumer<IConnection> onConnectionClosed) throws IOException {
         return new JavaNetTCPServer(onConnectionAccepted, onConnectionClosed);
@@ -80,6 +88,8 @@ public interface ITCPServer {
      * Sends a packet using a specified protocol to all connected clients.
      * @param protocol the protocol to send the packet with.
      * @param packet the packet to broadcast.
+     *
+     * @throws IOException if the packet fails to send.
      */
     void broadcastPacket(IPacketProtocol protocol, IPacket packet) throws IOException;
 
@@ -88,6 +98,8 @@ public interface ITCPServer {
      * @param connection the connection to exclude.
      * @param protocol the protocol to send the packet with.
      * @param packet the packet to broadcast.
+     *
+     * @throws IOException if the packet fails to send.
      */
     void broadcastPacketToAllExcept(IConnection connection, IPacketProtocol protocol, IPacket packet) throws IOException;
 

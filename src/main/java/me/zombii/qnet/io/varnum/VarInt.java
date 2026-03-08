@@ -32,6 +32,8 @@ public class VarInt {
      * Write a number to a serializer.
      * @param serializer the serializer used.
      * @param v the number to write.
+     *
+     * @throws IOException if it fails to write a byte.
      */
     public static void write(Serializer serializer, int v) throws IOException {
         int value = v;
@@ -46,6 +48,8 @@ public class VarInt {
      * Reads a number from a deserializer.
      * @param deserializer the deserializer used.
      * @return the number read.
+     *
+     * @throws IOException if it failed to read a byte or the number is invalid.
      */
     public static int read(Deserializer deserializer) throws IOException {
         int out = 0;

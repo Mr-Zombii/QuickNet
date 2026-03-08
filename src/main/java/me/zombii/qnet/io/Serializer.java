@@ -18,6 +18,7 @@ public class Serializer {
 
     /**
      * Creates a serializer with an output stream with the endian set as "big endian"
+     * @param outputStream the output stream used.
      */
     public Serializer(OutputStream outputStream) {
         this(outputStream, ByteOrder.BIG_ENDIAN);
@@ -25,6 +26,8 @@ public class Serializer {
 
     /**
      * Creates a serializer with an output stream and endian.
+     * @param outputStream the output stream used.
+     * @param byteOrder the endian to be set.
      */
     public Serializer(
             OutputStream outputStream,
@@ -407,6 +410,8 @@ public class Serializer {
 
     /**
      * Closes the owner output stream.
+     *
+     * @throws IOException if the stream was already closed or fails to close.
      */
     public void close() throws IOException {
         outputStream.close();

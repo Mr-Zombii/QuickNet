@@ -20,6 +20,8 @@ public interface IConnection {
      * Sends a packet using a protocol to the client/server.
      * @param packetProtocol the protocol the packet belongs to.
      * @param packet the packet to send.
+     *
+     * @throws IOException if connection isn't connected to anything, or it failed to send.
      */
     void sendPacket(IPacketProtocol packetProtocol, IPacket packet) throws IOException;
 

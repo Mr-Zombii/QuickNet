@@ -28,6 +28,8 @@ public interface ITCPClient extends IConnection {
 
     /**
      * Creates a default TCPClient using the Netty Backend with on connection accepted and closed hooks.
+     * @param onConnectionAccepted sets a hook for when the connection succeeds.
+     * @param onConnectionClosed sets a hook for when the connection is closed.
      * @return Netty TCP Client.
      */
     static ITCPClient newNettyClient(Consumer<ITCPClient> onConnectionAccepted, Consumer<ITCPClient> onConnectionClosed) {
@@ -38,15 +40,17 @@ public interface ITCPClient extends IConnection {
      * Creates a default TCPClient using the Java.Net Backend with on connection accepted and closed hooks.
      * @return Java.Net TCP Client.
      */
-    static ITCPClient newJavaNetClient() throws IOException {
+    static ITCPClient newJavaNetClient() {
         return new JavaNetTCPClient();
     }
 
     /**
      * Creates a default TCPClient using the Java.Net Backend with on connection accepted and closed hooks.
+     * @param onConnectionAccepted sets a hook for when the connection succeeds.
+     * @param onConnectionClosed sets a hook for when the connection is closed.
      * @return Java.Net TCP Client.
      */
-    static ITCPClient newJavaNetClient(Consumer<ITCPClient> onConnectionAccepted, Consumer<ITCPClient> onConnectionClosed) throws IOException {
+    static ITCPClient newJavaNetClient(Consumer<ITCPClient> onConnectionAccepted, Consumer<ITCPClient> onConnectionClosed) {
         return new JavaNetTCPClient(onConnectionAccepted, onConnectionClosed);
     }
 
@@ -54,6 +58,8 @@ public interface ITCPClient extends IConnection {
      * Attempts to connect to a server with a default protocol using an address.
      * @param protocol the protocol to start with.
      * @param address the server address in the form of "host:port".
+     *
+     * @throws IOException if the connection fails or the client errors horribly.
      */
     void connect(IPacketProtocol protocol, String address) throws IOException;
 
@@ -62,6 +68,8 @@ public interface ITCPClient extends IConnection {
      * @param protocol the protocol to start with.
      * @param address the server address in the form of "host:port".
      * @param timeout the time in ms until the client will stop trying to connect.
+     *
+     * @throws IOException if the connection fails or the client errors horribly.
      */
     void connect(IPacketProtocol protocol, String address, int timeout) throws IOException;
 
@@ -69,6 +77,8 @@ public interface ITCPClient extends IConnection {
      * Attempts to connect to a server with a default protocol using an address.
      * @param protocol the protocol to start with.
      * @param address the server address in the form of "host:port".
+     *
+     * @throws IOException if the connection fails or the client errors horribly.
      */
     void connect(IPacketProtocol protocol, InetSocketAddress address) throws IOException;
 
@@ -77,6 +87,8 @@ public interface ITCPClient extends IConnection {
      * @param protocol the protocol to start with.
      * @param address the server address in the form of "host:port".
      * @param timeout the time in ms until the client will stop trying to connect.
+     *
+     * @throws IOException if the connection fails or the client errors horribly.
      */
     void connect(IPacketProtocol protocol, InetSocketAddress address, int timeout) throws IOException;
 
