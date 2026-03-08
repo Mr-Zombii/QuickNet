@@ -19,7 +19,7 @@ public class ChatServer {
             @Override
             public void handle(Side side, IConnection connection, IPacketProtocol protocol, MessagePacket packet) throws IOException {
                 System.out.println(packet.getSender() + " > " + packet.getMessage());
-                connection.broadcastPacketToOthers(protocol, packet);
+                connection.getServer().broadcastPacketToAllExcept(connection, protocol, packet);
             }
         });
 
