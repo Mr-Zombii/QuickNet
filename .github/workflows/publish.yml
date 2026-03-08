@@ -82,8 +82,5 @@ jobs:
           git commit -m "${{ env.GIT_MESSAGE }} https://github.com/${{ github.event.repository.full_name }}/commit/${{ env.GIT_HASH }}. Version: ${{ env.VERSION }}"
 
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.MAVEN_PAT }}
-          repository: Mr-Zombii/git-maven
-          force_with_lease: true
+        run: |
+          git push origin HEAD:main
