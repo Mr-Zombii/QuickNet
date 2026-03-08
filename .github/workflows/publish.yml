@@ -59,6 +59,9 @@ jobs:
           ref: main
           fetch-depth: 0
           token: ${{ secrets.MAVEN_PAT }}
+      - name: Update remote
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.MAVEN_PAT }}@github.com/Mr-Zombii/git-maven.git
 
       - name: Create package directories
         run: |
