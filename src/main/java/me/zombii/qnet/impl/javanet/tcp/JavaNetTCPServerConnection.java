@@ -1,5 +1,6 @@
 package me.zombii.qnet.impl.javanet.tcp;
 
+import me.zombii.qnet.api.ITCPClient;
 import me.zombii.qnet.api.ITCPServer;
 import me.zombii.qnet.io.Deserializer;
 import me.zombii.qnet.io.Serializer;
@@ -81,15 +82,6 @@ public class JavaNetTCPServerConnection implements IJavaNetConnection {
     }
 
     @Override
-    public void broadcastPacketToOthers(IPacketProtocol packetProtocol, IPacket packet) throws IOException {
-        for (IConnection connection : server.getAllConnections()) {
-            if (connection != this) {
-                connection.sendPacket(protocol, packet);
-            }
-        }
-    }
-
-    @Override
     public void swap(IPacketProtocol protocol) {
         this.protocol = protocol;
     }
@@ -133,6 +125,11 @@ public class JavaNetTCPServerConnection implements IJavaNetConnection {
     @Override
     public ITCPServer getServer() {
         return server;
+    }
+
+    @Override
+    public ITCPClient getClient() {
+        throw new UnsupportedOperationException("Tried to get client from the server-side.");
     }
 
     @Override

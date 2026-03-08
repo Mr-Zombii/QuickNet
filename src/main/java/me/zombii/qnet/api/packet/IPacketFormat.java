@@ -7,16 +7,42 @@ import me.zombii.qnet.io.Serializer;
 import java.io.IOException;
 import java.util.zip.DataFormatException;
 
+/**
+ * An API class that allows the custom definition of header and footer data surrounding a packet's payload given a protocol.
+ *
+ * @since 1.0.0
+ * @author Mr-Zombii
+ */
 public interface IPacketFormat {
 
+    /**
+     * Makes a prebuilt instance of this class using default settings.
+     * <ul>
+     *     <li>Compression: <strong>Enabled</strong></li>
+     *     <li>Compression Level: {@link java.util.zip.Deflater#DEFAULT_COMPRESSION}</li>
+     * </ul>
+     */
     static IPacketFormat makeDefault() {
         return new DefaultPacketFormat();
     }
 
+    /**
+     * Makes a prebuilt instance of this class using custom settings.
+     * <ul>
+     *     <li>Compression Level (if enabled): {@link java.util.zip.Deflater#DEFAULT_COMPRESSION}</li>
+     * </ul>
+     */
     static IPacketFormat makeDefault(boolean compressionEnabled) {
         return new DefaultPacketFormat(compressionEnabled);
     }
 
+    /**
+     * Makes a prebuilt instance of this class using custom settings.
+     * <ul>
+     *     <li>Compression: <strong>Enabled</strong></li>
+     *     <li>Compression Level: {@link java.util.zip.Deflater#DEFAULT_COMPRESSION}</li>
+     * </ul>
+     */
     static IPacketFormat makeDefault(int compressionLevel) {
         return new DefaultPacketFormat(true, compressionLevel);
     }

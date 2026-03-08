@@ -10,30 +10,80 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.function.Consumer;
 
+/**
+ * The core API class for the TCPClient that handles client-server communication.
+ *
+ * @since 1.0.0
+ * @author Mr-Zombii
+ */
 public interface ITCPClient extends IConnection {
 
+    /**
+     * Creates a default TCPClient using the Netty Backend.
+     * @return Netty TCP Client.
+     */
     static ITCPClient newNettyClient() {
         return new NettyTCPClient();
     }
 
+    /**
+     * Creates a default TCPClient using the Netty Backend with on connection accepted and closed hooks.
+     * @return Netty TCP Client.
+     */
     static ITCPClient newNettyClient(Consumer<ITCPClient> onConnectionAccepted, Consumer<ITCPClient> onConnectionClosed) {
         return new NettyTCPClient(onConnectionAccepted, onConnectionClosed);
     }
 
+    /**
+     * Creates a default TCPClient using the Java.Net Backend with on connection accepted and closed hooks.
+     * @return Java.Net TCP Client.
+     */
     static ITCPClient newJavaNetClient() throws IOException {
         return new JavaNetTCPClient();
     }
 
+    /**
+     * Creates a default TCPClient using the Java.Net Backend with on connection accepted and closed hooks.
+     * @return Java.Net TCP Client.
+     */
     static ITCPClient newJavaNetClient(Consumer<ITCPClient> onConnectionAccepted, Consumer<ITCPClient> onConnectionClosed) throws IOException {
         return new JavaNetTCPClient(onConnectionAccepted, onConnectionClosed);
     }
 
+    /**
+     * Attempts to connect to a server with a default protocol using an address.
+     * @param protocol the protocol to start with.
+     * @param address the server address in the form of "host:port".
+     */
     void connect(IPacketProtocol protocol, String address) throws IOException;
+
+    /**
+     * Attempts to connect to a server with a default protocol using an address.
+     * @param protocol the protocol to start with.
+     * @param address the server address in the form of "host:port".
+     * @param timeout the time in ms until the client will stop trying to connect.
+     */
     void connect(IPacketProtocol protocol, String address, int timeout) throws IOException;
+
+    /**
+     * Attempts to connect to a server with a default protocol using an address.
+     * @param protocol the protocol to start with.
+     * @param address the server address in the form of "host:port".
+     */
     void connect(IPacketProtocol protocol, InetSocketAddress address) throws IOException;
+
+    /**
+     * Attempts to connect to a server with a default protocol using an address.
+     * @param protocol the protocol to start with.
+     * @param address the server address in the form of "host:port".
+     * @param timeout the time in ms until the client will stop trying to connect.
+     */
     void connect(IPacketProtocol protocol, InetSocketAddress address, int timeout) throws IOException;
-    void sendPacket(IPacketProtocol protocol, IPacket packet) throws IOException;
+
+    /**
+     * Gets the connection status if you are connected to a server or not.
+     * @return the connection status.
+     */
     boolean isConnected();
-    void disconnect();
 
 }

@@ -145,8 +145,11 @@ public class NettyTCPServer implements ITCPServer {
         }
     }
 
-    public void broadcastPacketToAllExcept(IConnection connection, IPacketProtocol protocol, IPacket packet) throws IOException {
-        connection.broadcastPacketToOthers(protocol, packet);
+    public void broadcastPacketToAllExcept(IConnection connectionToExclude, IPacketProtocol packetProtocol, IPacket packet) throws IOException {
+        for (IConnection connection : getAllConnections()) {
+            if (connection != connectionToExclude)
+                connection.sendPacket(packetProtocol, packet);
+        }
     }
 
     public boolean isRunning() {

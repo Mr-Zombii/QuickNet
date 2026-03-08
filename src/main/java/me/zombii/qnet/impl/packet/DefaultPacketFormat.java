@@ -83,9 +83,9 @@ public class DefaultPacketFormat implements IPacketFormat {
 
         int id = protocol.getPacketId(packet);
         serializer.writeInt(id);  // packet-id
-        if (compressionEnabled) {
+        if (compressionEnabled)
             serializer.writeInt(bytes.length);  // decompressed-size
-        }
+
         serializer.writeByteArray(deflated);
     }
 

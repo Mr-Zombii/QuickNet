@@ -5,9 +5,19 @@ import me.zombii.qnet.io.Serializer;
 
 import java.io.IOException;
 
+/**
+ * A variation of the <a href="https://en.wikipedia.org/wiki/LEB128">LEB128</a> spec for 32-bit integers.
+ */
 public class VarInt {
 
+    /**
+     * Gets the possible number of bytes from writing a number.
+     * @param v the number to check.
+     * @return the possible byte count.
+     */
     public static int getSize(int v) {
+        if (v == 0) return 1;
+
         int totalBytes = 0;
         int value = v;
 
@@ -18,6 +28,11 @@ public class VarInt {
         return totalBytes;
     }
 
+    /**
+     * Write a number to a serializer.
+     * @param serializer the serializer used.
+     * @param v the number to write.
+     */
     public static void write(Serializer serializer, int v) throws IOException {
         int value = v;
         while ((value & -128) != 0) {
@@ -27,6 +42,11 @@ public class VarInt {
         serializer.writeByte((byte) value);
     }
 
+    /**
+     * Reads a number from a deserializer.
+     * @param deserializer the deserializer used.
+     * @return the number read.
+     */
     public static int read(Deserializer deserializer) throws IOException {
         int out = 0;
         int bytes = 0;

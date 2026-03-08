@@ -5,15 +5,27 @@ import java.io.OutputStream;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * The serialization class that allows the flattening of data to bytes.
+ *
+ * @since 1.0.0
+ * @author Mr-Zombii
+ */
 public class Serializer {
 
     final OutputStream outputStream;
     ByteOrder byteOrder;
 
+    /**
+     * Creates a serializer with an output stream with the endian set as "big endian"
+     */
     public Serializer(OutputStream outputStream) {
         this(outputStream, ByteOrder.BIG_ENDIAN);
     }
 
+    /**
+     * Creates a serializer with an output stream and endian.
+     */
     public Serializer(
             OutputStream outputStream,
             ByteOrder byteOrder
@@ -22,11 +34,19 @@ public class Serializer {
         this.byteOrder = byteOrder;
     }
 
-    public void setByteOrder(ByteOrder byteOrder) {
+    /**
+     * Sets the endian used to write numbers.
+     * @param byteOrder the endian.
+     */
+    public void setEndian(ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
 
-    public ByteOrder getByteOrder() {
+    /**
+     * Gets the endian used to write numbers.
+     * @return the current endianness.
+     */
+    public ByteOrder getEndian() {
         return byteOrder;
     }
 
@@ -385,6 +405,9 @@ public class Serializer {
         return outputStream;
     }
 
+    /**
+     * Closes the owner output stream.
+     */
     public void close() throws IOException {
         outputStream.close();
     }

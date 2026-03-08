@@ -107,11 +107,6 @@ public class NettyTCPClient implements ITCPClient, INettyConnection {
         } else throw new IOException("Tried sending packet from disconnected client");
     }
 
-    @Override
-    public void broadcastPacketToOthers(IPacketProtocol packetProtocol, IPacket packet) throws IOException {
-        throw new IOException("Cannot broadcast packet from client!");
-    }
-
     Bootstrap bootstrap;
     Channel channel;
     EventLoopGroup eventLoopGroup;
@@ -168,7 +163,12 @@ public class NettyTCPClient implements ITCPClient, INettyConnection {
 
     @Override
     public ITCPServer getServer() {
-        throw new UnsupportedOperationException("Not supported on a client connection.");
+        throw new UnsupportedOperationException("Tried to get the server from the client-side.");
+    }
+
+    @Override
+    public ITCPClient getClient() {
+        return this;
     }
 
     @Override

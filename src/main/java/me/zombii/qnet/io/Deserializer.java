@@ -5,15 +5,27 @@ import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * The deserialization class that allows the reading of data from an input stream.
+ *
+ * @since 1.0.0
+ * @author Mr-Zombii
+ */
 public class Deserializer {
 
     final InputStream in;
     ByteOrder byteOrder;
 
+    /**
+     * Creates a serializer with an input stream with the endian set as "big endian"
+     */
     public Deserializer(InputStream in) {
         this(in, ByteOrder.BIG_ENDIAN);
     }
 
+    /**
+     * Creates a deserializer with an output stream and endian.
+     */
     public Deserializer(
             InputStream inputStream,
             ByteOrder byteOrder
@@ -22,11 +34,19 @@ public class Deserializer {
         this.byteOrder = byteOrder;
     }
 
-    public void setByteOrder(ByteOrder byteOrder) {
+    /**
+     * Sets the endian used to read numbers.
+     * @param byteOrder the endian.
+     */
+    public void setEndian(ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
 
-    public ByteOrder getByteOrder() {
+    /**
+     * Gets the endian used to read numbers.
+     * @return the current endianness.
+     */
+    public ByteOrder getEndian() {
         return byteOrder;
     }
 
@@ -180,6 +200,9 @@ public class Deserializer {
         return in;
     }
 
+    /**
+     * Closes the owner input stream.
+     */
     public void close() throws IOException {
         in.close();
     }

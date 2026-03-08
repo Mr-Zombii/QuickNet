@@ -8,6 +8,9 @@ version = System.getenv("GITHUB_EVENT_RELEASE_TAG") == null ? "1.0-SNAPSHOT" : S
 java {
     sourceCompatibility(JavaVersion.VERSION_1_8)
     targetCompatibility(JavaVersion.VERSION_1_8)
+
+    withJavadocJar()
+    withSourcesJar()
 }
 
 repositories {

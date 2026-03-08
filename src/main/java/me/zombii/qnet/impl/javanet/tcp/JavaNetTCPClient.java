@@ -103,11 +103,6 @@ public class JavaNetTCPClient implements ITCPClient, IJavaNetConnection {
         outputStream.flush();
     }
 
-    @Override
-    public void broadcastPacketToOthers(IPacketProtocol packetProtocol, IPacket packet) throws IOException {
-        throw new IOException("Cannot broadcast packet from client!");
-    }
-
     @SuppressWarnings({"unchecked", "rawtypes", "CallToPrintStackTrace"})
     private void run(IPacketProtocol defaultProtocol, InetSocketAddress address, int timeout) throws IOException {
         if (this.socket.isClosed()) {
@@ -195,7 +190,12 @@ public class JavaNetTCPClient implements ITCPClient, IJavaNetConnection {
 
     @Override
     public ITCPServer getServer() {
-        throw new UnsupportedOperationException("Not supported on a client connection.");
+        throw new UnsupportedOperationException("Tried to get the server from the client-side.");
+    }
+
+    @Override
+    public ITCPClient getClient() {
+        return this;
     }
 
     @Override

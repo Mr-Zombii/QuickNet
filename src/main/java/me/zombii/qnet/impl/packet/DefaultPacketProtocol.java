@@ -15,7 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class DefaultPacketProtocol implements IPacketProtocol {
 
-    boolean canOverridePacketsAndPacketHandlers;
+    boolean allowReregistration;
     IPacketFormat packetFormat;
 
     public DefaultPacketProtocol() {
@@ -30,8 +30,8 @@ public class DefaultPacketProtocol implements IPacketProtocol {
         this(packetFormat, false);
     }
 
-    public DefaultPacketProtocol(IPacketFormat packetFormat, boolean allowPacketAndHandlerOverwriting) {
-        this.canOverridePacketsAndPacketHandlers = allowPacketAndHandlerOverwriting;
+    public DefaultPacketProtocol(IPacketFormat packetFormat, boolean allowReregistration) {
+        this.allowReregistration = allowReregistration;
         this.packetFormat = packetFormat;
     }
 
@@ -54,7 +54,7 @@ public class DefaultPacketProtocol implements IPacketProtocol {
 
     @Override
     public int registerPacket(Class<? extends IPacket> packetClass, int id) {
-        if (!canOverridePacketsAndPacketHandlers && id2Packet.containsKey(id))
+        if (!allowReregistration && id2Packet.containsKey(id))
             throw new IllegalArgumentException("A packet has already been registered to this id: " + id + ".");
 
         Constructor<? extends IPacket> constructor = null;
@@ -84,12 +84,12 @@ public class DefaultPacketProtocol implements IPacketProtocol {
 
         switch (side) {
             case CLIENT:
-                if (!canOverridePacketsAndPacketHandlers && id2ClientHandler.containsKey(id))
+                if (!allowReregistration && id2ClientHandler.containsKey(id))
                     throw new IllegalArgumentException("A client packet handler has already been registered to the id: " + id + ".");
                 id2ClientHandler.put(id, handler);
                 break;
             case SERVER:
-                if (!canOverridePacketsAndPacketHandlers && id2ServerHandler.containsKey(id))
+                if (!allowReregistration && id2ServerHandler.containsKey(id))
                     throw new IllegalArgumentException("A server packet handler has already been registered to the id: " + id + ".");
                 id2ServerHandler.put(id, handler);
                 break;
@@ -133,7 +133,7 @@ public class DefaultPacketProtocol implements IPacketProtocol {
     }
 
     @Override
-    public <T extends IPacket> IPacketHandler<?> getHandler(Side side, IPacket packet) {
+    public <T extends IPacket> IPacketHandler<?> getHandler(Side side, T packet) {
         return getHandler(side, packet.getClass());
     }
 

@@ -5,14 +5,15 @@ import me.zombii.qnet.io.Serializer;
 
 import java.io.IOException;
 
+/**
+ * The basic packet that defines read & write functions.
+ *
+ * @since 1.0.0
+ * @author Mr-Zombii
+ */
 public interface IPacket {
 
-    default void write(Serializer serializer) throws IOException {
-
-    }
-
-    default void read(Deserializer deserializer) throws IOException {
-
-    }
+    default void write(Serializer serializer) throws IOException {}
+    default void read(Deserializer deserializer) throws IOException {}
 
 }

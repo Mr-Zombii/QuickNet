@@ -1,6 +1,7 @@
 package me.zombii.qnet.impl.netty.tcp;
 
 import io.netty.channel.ChannelHandlerContext;
+import me.zombii.qnet.api.ITCPClient;
 import me.zombii.qnet.api.ITCPServer;
 import me.zombii.qnet.io.Serializer;
 import me.zombii.qnet.api.connections.IConnection;
@@ -47,15 +48,6 @@ public class NettyTCPServerConnection implements INettyConnection {
     }
 
     @Override
-    public void broadcastPacketToOthers(IPacketProtocol packetProtocol, IPacket packet) throws IOException {
-        for (IConnection connection : server.getAllConnections()) {
-            if (connection != this) {
-                connection.sendPacket(protocol, packet);
-            }
-        }
-    }
-
-    @Override
     public void swap(IPacketProtocol protocol) {
         this.protocol = protocol;
     }
@@ -98,6 +90,11 @@ public class NettyTCPServerConnection implements INettyConnection {
     @Override
     public ITCPServer getServer() {
         return server;
+    }
+
+    @Override
+    public ITCPClient getClient() {
+        throw new UnsupportedOperationException("Tried to get client from the server-side.");
     }
 
     @Override
