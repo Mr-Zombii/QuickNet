@@ -55,10 +55,13 @@ jobs:
       - name: Checkout artifact repo
         uses: actions/checkout@v4
         with:
-          repository: 'Mr-Zombii/git-maven'
-          ref: ${{ github.head_ref }}
+          repository: Mr-Zombii/git-maven
+          ref: main
           fetch-depth: 0
           token: ${{ secrets.MAVEN_PAT }}
+      - name: Update remote
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.MAVEN_PAT }}@github.com/Mr-Zombii/git-maven.git
 
       - name: Create package directories
         run: |
@@ -79,11 +82,9 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
           git add .
-          git commit -m "${{ env.GIT_MESSAGE }} https://github.com/${{ github.event.repository.full_name }}/commit/${{ env.GIT_HASH }}. Version: ${{ env.VERSION }}"
+          git commit -m "${{ env.GIT_MESSAGE }} https://github.com/${{ github.event.repository.full_name }}/commit/${{ env.GIT_HASH }}. Version: ${{ env.VERSION }}" || echo "Nothing to commit"
+          git push origin HEAD:main
 
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.MAVEN_PAT }}
-          repository: vikulin/artifact
-          force_with_lease: true
+        run: |
+          git push origin HEAD:main
